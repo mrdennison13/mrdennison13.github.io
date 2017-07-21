@@ -1,0 +1,33 @@
+.jumbotron {
+    background-image: url('pics/8-2.jpg');
+    background-size: 50%;
+    background-attachment: fixed;
+}
+
+p.thick {font-weight:bold;}
+
+
+
+
+h1.ontop {
+  position: relative;
+  top: -3.5em;
+  margin-bottom: -3.5em;
+}
+
+p.ontop {
+  position: relative;
+  top: -6.0em;
+  margin-bottom: -4.5em;
+}
+
+
+.bar {
+  height: 10em;
+  padding-top: 2em;
+  opacity: 0.5;
+  background: #ffffff;
+  /*border-top: 3px solid #ccc;*/
+  /*border-bottom: 3px solid #ccc;*/
+  margin-top: 0.0em;
+}

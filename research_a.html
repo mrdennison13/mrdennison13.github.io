@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <title>Jumbotron Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="mine.css" rel="stylesheet">
+    <link href="hover.css" rel="stylesheet">
+    
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="jumbotron.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">Home</a>
+        </div>
+	<div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+	    <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Research <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="research_en.html">Elastic networks</a></li>
+		<li><a href="research_a.html">Active force-dipoles</a></li>
+                <li><a href="research_c.html">Colloidal particles</a></li>
+                <!-- <li class="divider"></li> -->
+              </ul>
+            </li>	    
+	    <!-- <li><a href="research.html">Research</a></li>-->
+	    <li><a href="pub_list.html">Publications</a></li>
+	    <li><a href="cv.html">CV</a></li>
+	    <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+	<div class="row-fluid">
+	  <div class="span10">
+            <h1>Matthew Dennison</h1>
+	  </div>
+	</div>
+      </div>
+    </div>
+
+
+
+
+
+
+    <div class="container">
+      <div class="row" id="elastic networks">
+
+	<div class="col-md-2">
+	  <p><br><br><br></p>
+          <img class="img-rounded" class="featurette-image img-responsive" src="pics/active_1.jpg" alt="Model elastic network" width=100%>
+        </div>
+	
+	<div class="col-md-8">
+	  <h1 align="center"><u><font color="#3498DB">Active force-dipoles</font></u> <br> </h1>
+	  <p>Cells contain active proteins that can undergo
+	    conformational changes driven by catalytic chemical
+	    reactions. Experimental studies have shown that, compared
+	    to when their activity is suppressed, these proteins can
+	    enhance not only their own diffusion coefficients, but also
+	    those of passive tracer particles. Although the exact
+	    origins of this effect are unclear, various mechanisms
+	    have been suggested, e.g. force dipole interactions due to
+	    molecular motors which move along filaments and collective
+	    hydrodynamic effects caused by active proteins. </p>
+
+	  <p>My research focuses on using computer simulations to
+	    study this enhancement of the particle diffusion
+	    coefficients, in order to understand how hydrodynamic
+	    flow-fields driven by the motion of active particles can
+	    affect the motion of passive particles and to elucidate
+	    the important control parameters for the
+	    effect.<br><br><br> </p>
+	</div>
+
+	<div class="col-md-2">
+	  <p><br><br><br></p>
+          <img class="img-rounded" class="featurette-image img-responsive" src="pics/active_1.jpg" alt="Model elastic network" width=100%>
+        </div>
+	
+      </div>
+    </div>
+
+    <div class="container">        
+      <!-- -------------------- -->
+      <!--       COLLOIDS       -->
+      <!-- -------------------- -->
+      
+      <div class="row" id="elastic networks">
+        <div class="col-sm-offset-1 col-md-6">
+          <p class="lead" >Enhancing particle diffusion</p>
+	  
+          <p>In order to investigate the diffusive dynamics in a
+	    system that contains active particles, a passive tracer
+	    particle and a solvent we use the Multi-Particle Collision
+	    Dynamics method (MPCD). In this method, a fluid is
+	    modelled as a large number of point-like particles, which
+	    interact with each other and with the active and passive
+	    particles. Active proteins are modelled as active dumbbell
+	    particles, which stochastically cycle between open and
+	    closed conformations and act as non-equilibrium fluctuating
+	    force dipoles.</p>
+	  
+          <p>Consistent with
+	    experiments, <a href="https://arxiv.org/pdf/1702.07596.pdf">we
+	    find that</a> the diffusion coefficients of both the
+	    passive tracer particle and the dumbbells themselves are
+	    enhanced when the dumbbells are active. Our findings show
+	    that it is the hydrodynamic interactions induced by the
+	    active dumbbells that give rise to this effect. Two key
+	    parameters are the density of dumbbells and the strength
+	    of the force dipole (i.e. the force with which the
+	    dumbbells change conformation). When more dumbbells are
+	    present, the effect is increased, in contrast to inactive
+	    dumbbells, which crowd the passive particle and reduce its
+	    diffusion coefficient. When the force dipole is stronger,
+	    the effect is also increased. While the observed effects
+	    are not large, their existence indicates that the
+	    conformational changes of active proteins could be
+	    important for transport in active systems. <br><br></p>
+	  
+        </div>
+        <div class="col-md-4">
+	  <p><br><br></p>
+          <img class="img-rounded" class="featurette-image img-responsive" src="pics/active_2.jpg" alt="Model elastic network" width=100%>
+	  <div class="popup" onclick="myFunction1()"><font color="blue"><br>Schematic
+	    representation of simulated system ...</font>
+	    <span class="popuptext" id="myPopup1">Schematic
+	    representation of simulated system containing active
+	    force-dipoles (green dumbbells), a passive colloidal
+	    particle (red) and a fluid (blue background).</span>
+	  </div>
+
+        </div>
+      </div>
+      
+     
+    </div> <!-- /container -->
+
+    <hr>
+    <div class="container">      
+      <footer>
+	<p>&copy; 2017 Matthew Dennison.</p>
+      </footer>
+    </div> 
+    
+
+    
+    
+    <!-- Bootstrap core JavaScript
+	 ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="jquery.min.js"><\/script>')</script>
+      <script src="bootstrap.min.js"></script>
+      <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+      <script src="ie10-viewport-bug-workaround.js"></script>
+
+      <script>
+	function myFunction1() {
+	var popup = document.getElementById("myPopup1");
+	popup.classList.toggle("show");
+	}
+      </script>
+
+      
+  </body>
+</html>

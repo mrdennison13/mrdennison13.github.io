@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <title>Jumbotron Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap.min.css" rel="stylesheet">
+    <link href="mine.css" rel="stylesheet">
+    <link href="hover.css" rel="stylesheet">
+    
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="jumbotron.css" rel="stylesheet">
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+    
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">Home</a>
+        </div>
+	<div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+	    <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Research <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="research_en.html">Elastic networks</a></li>
+		<li><a href="research_a.html">Active force-dipoles</a></li>
+                <li><a href="research_c.html">Colloidal particles</a></li>
+                <!-- <li class="divider"></li> -->
+              </ul>
+            </li>	    
+	    <!-- <li><a href="research.html">Research</a></li>-->
+	    <li><a href="pub_list.html">Publications</a></li>
+	    <li><a href="cv.html">CV</a></li>
+	    <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+	<div class="row-fluid">
+	  <div class="span10">
+            <h1>Matthew Dennison</h1>
+	  </div>
+	</div>
+      </div>
+    </div>
+
+
+
+
+    <div class="container">
+      <div class="row" id="elastic networks">
+	<div class="col-md-2">
+	  <p><br><br><br></p>
+          <img class="img-rounded" class="featurette-image img-responsive" src="pics/network_1.jpg" alt="Model elastic network" width=100%>
+        </div>
+	<div class="col-md-8">
+	  <h1 align="center"><u><font color="#3498DB">Elastic Networks</font></u><br> </h1>
+	  <p>How elastic networks respond to deformation depends
+            sensitively on both the properties of the constituent
+            filaments and on the network topology. For the former, how
+            individual filaments respond to being stretched or
+            compressed affects the response at the network level. For
+            the latter, important properties include how and where the
+            filaments are connected. </p>
+
+	  <p>My research focuses on using computer simulations of
+            model networks to understand this behaviour and to find
+            ways of controlling it, focusing in particular on
+            so-called marginal networks.<br><br><br> </p>
+	</div>
+	<div class="col-md-2">
+	  <p><br><br><br></p>
+	  <img class="img-rounded" class="featurette-image img-responsive" src="pics/network_1.jpg" alt="Model elastic network" width=100%>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">        
+      <!-- -------------------- -->
+      <!--       NETWORKS       -->
+      <!-- -------------------- -->
+      
+      <div class="row" id="elastic networks">
+        <div class="col-sm-offset-1 col-md-6">
+          <p class="lead" >Modelling elastics networks</p>
+	  
+          <p>Perhaps the simplest model elastic networks are
+          lattice-based networks of Hookean springs. These are
+          constructed by placing network nodes on lattice sites and
+          then connecting all nearest neighbours with springs. The
+          number of connections at each node is given by the
+          connectivity <font color="red">z</font>, and the initial
+          value will depend on the lattice used. In 2d, for example,
+          beginning from a triangular lattice will
+          give <font color="red">z=6</font>, while a square lattice
+          has <font color="red">z=4</font>. The network topology can
+          then be controlled by randomly diluting the network. That
+          is, by randomly removing springs one can control the value
+          of <font color="red">z</font>. Since we are using Hookean
+          springs, the only response to deformation is when the
+          springs are stretched or compressed.</p>
+	  
+          <p>This lattice based method can also be used in 3d, using,
+          for example, simple cubic (<font color="red">z=6</font>) or
+          FCC (<font color="red">z=12</font>) based lattices. Other,
+          more complex network geometries include Mikado networks,
+          where,
+          <a href="https://en.wikipedia.org/wiki/Mikado_(game)">as in
+          the game</a>, sticks of equal length are dropped
+          randomly. Overlapping sticks are then cross-linked to form a
+          network. The key parameter here is the density of sticks,
+          which is controlled by randomly removing them. Even more
+          removed from lattice based networks are so-called
+          random-bond networks, where network nodes are placed
+          randomly and randomly chosen pairs are then
+          connected.<br><br><br><br> </p>
+	  
+        </div>
+        <div class="col-md-4">
+	  <p><br><br></p>
+          <img class="img-rounded" class="featurette-image img-responsive" src="pics/network_intro.jpg" alt="Model elastic network consisting of network nodes (red circles) connected by Hookean springs (blue lines)" width=90% >
+	  <div class="popup" onclick="myFunction1()"><font color="blue"><br>Model elastic
+	    network consisting of ... </font>
+	    <span class="popuptext" id="myPopup1">Model elastic
+	    network consisting of network nodes (red circles) arranged
+	    on a triangular lattice, connected by Hookean springs
+	    (blue lines).</span>
+	  </div>
+        </div>
+
+      </div>
+      
+     
+    </div> <!-- /container -->
+
+
+
+<!-- col-md-6  col-sm-offset-1 -->
+
+    <div class="container">        
+      <!-- -------------------- -->
+      <!--       NETWORKS       -->
+      <!-- -------------------- -->
+      
+      <div class="row" id="elastic networks">
+        <div class="col-sm-offset-1 col-md-4">
+	  <p><br><br></p>
+          <img class="img-rounded" class="featurette-image img-responsive" src="pics/Maxwell_test.jpg" alt="Model elastic network" width=100%>
+	  <div class="popup"
+	  onclick="myFunction2()"><font color="blue"><br>Schematic showing behaviour of
+	  shear modulus G ... </font>
+	    <span class="popuptext" id="myPopup2">Schematic showing behaviour of shear
+	    modulus G (response to shear deformation) against network
+	    connectivity z. Networks with z>z<sub>c</sub> are
+	    mechanically rigid (it costs energy to deform them)
+	    networks with z<z<sub>c</sub> are mechanically
+	    floppy.</span>
+	  </div>
+        </div>
+	
+        <div class="col-md-6">
+          <p class="lead">Marginal networks: Highly responsive soft-matter materials</p>
+
+	  <p>As filaments are removed from a network, it will become
+	    increasingly easier to deform it. Measures of a network's
+	    rigidity, such as the shear
+	    modulus <font color="red">G</font> (defining how strongly
+	    the network resists shear deformation), will decrease as
+	    the connectivity <font color="red">z</font> is
+	    decreased. If all excess filaments are removed the network
+	    will be at the point where it is just mechanically stable:
+	    remove one more filament and the network is
+	    under-constrained and can be deformed with no cost in
+	    energy; add one more filament, and the network is
+	    over-constrained and will be stable.</p>
+	  
+          <p>In <a href="http://www.tandfonline.com/doi/abs/10.1080/14786446408643668">1864
+	    Maxwell showed</a> that this point is approximately
+	    reached when the number of degrees of freedom in the
+	    network (given by the number of network nodes) is just
+	    equal to the number of constraints (given by the springs
+	    connecting the nodes). In <font color="red">d</font>
+	    dimensions this gives a critical connectivity between
+	    rigid and floppy networks of
+	    approximately <font color="red">z<sub>c</sub>&asymp;
+	    2d</font>. When a network is at this so called
+	    Maxwell-point it is said to be a marginal network, since
+	    it is at the edge, or margins, of mechanical
+	    stability. Marginal networks have many interesting and
+	    potentially useful properties, as they are both unusually
+	    stiff and highly responsive to external forces or fields,
+	    properties which are desirable
+	    in <a href="https://en.wikipedia.org/wiki/Smart_material">smart
+	    materials</a> (materials which are designed to have
+	    properties that can be significantly changed in a
+	    controlled manner). Much theoretical work has looked at
+	    how marginal networks respond to applied forces and
+	    fields.<br><br><br><br></p>
+        </div>
+      </div>
+      
+     
+    </div> <!-- /container -->
+
+
+
+    <div class="container">        
+      <!-- -------------------- -->
+      <!--       NETWORKS       -->
+      <!-- -------------------- -->
+      
+      <div class="row" id="elastic networks">
+        <div class="col-sm-offset-1 col-md-6">
+          <p class="lead" >Thermal fluctuations</p>
+	  
+          <p>Consider a network of springs at or below the marginal
+	    point. It costs no energy to apply a small deformation to
+	    such a network. However, by, for example, shearing the
+	    network, one reduces the number of states that the network
+	    can assume. This results in a decrease in the system
+	    entropy and hence an increase in the system
+	    free-energy. Therefore, while there is no energy cost
+	    associated with (small) network deformations, there is a
+	    free energy cost, meaning that the network will begin to
+	    resist deformation. Based on the idea
+	    of <a href="https://en.wikipedia.org/wiki/Rubber_elasticity">entropic
+	    elasticity</a>, when one considers a mechanically floppy
+	    network the strength of the response to deformation is
+	    expected to scale linearly with the temperature, and to be
+	    independent of the mechanical energy of the spring,
+	    defined by its spring
+	    constant <font color="red">k</font>.</p>
+	  
+          <p><a href="https://arxiv.org/pdf/1304.3500.pdf">Using Monte
+            Carlo simulations</a>, it is possible to take thermal
+            fluctuations into account when modelling elastic
+            networks. While it is indeed the case that sub-marginal
+            networks exhibit a linear response, that
+            is <font color="red">G &prop; T</font>, with no dependence
+            on <font color="red">k</font>, marginal networks exhibit a
+            response whose dependence on temperature is
+            sub-linear. Triangular-lattice based networks diluted to
+            the marginal point exhibit a shear modulus that scales
+            as <font color="red">G &prop;
+            T<sup>1/2</sup>k<sup>1/2</sup></font>. This not only gives
+            two control parameters for the network response, namely
+            the spring constant and the temperature, but also results
+            in a network that has an anomalously high rigidity. That
+            is, when dealing with small temperatures, sub-linear powers
+            result in larger values
+            of <font color="red">G</font>. Such results are not
+            limited to lattice based
+            networks: <a href="https://arxiv.org/pdf/1410.7860.pdf">random
+            bond networks</a> exhibit the same qualitative behaviour,
+            albeit with a different scaling constant,
+            with <font color="red">G &prop;
+            T<sup>2/3</sup>k<sup>1/3</sup></font>. <br><br><br><br></p>
+	  
+        </div>
+        <div class="col-md-4">
+	  <p><br><br></p>
+          <img class="img-rounded" class="featurette-image img-responsive" src="pics/G_against_T_website1.jpg" alt="Model elastic network" width=100%>
+	  <div class="popup"
+	  onclick="myFunction3()"><font color="blue"><br>Shear modulus
+	  G (response to shear deformation) against ... </font>
+	    <span class="popuptext" id="myPopup3">Shear
+	      modulus <font color="red">G</font> (response to shear
+	      deformation) against system
+	      temperature <font color="red">T</font> for
+	      connectivities <font color="red">z</font> above, below
+	      and approximately at the marginal
+	      point <font color="red">z<sub>c</sub></font>. Dependence
+	      on temperature is indicated in the plot.</span>
+	  </div>
+        </div>
+      </div>
+      
+     
+    </div> <!-- /container -->
+
+
+
+
+
+    <div class="container">        
+      <!-- -------------------- -->
+      <!--       NETWORKS       -->
+      <!-- -------------------- -->
+      
+      <div class="row" id="elastic networks">
+        <div class="col-sm-offset-1 col-md-4">
+	  <p><br><br></p>
+          <img class="img-rounded" class="featurette-image img-responsive" src="pics/Gp_against_w_z_website2.jpg" alt="Model elastic network" width=100%>
+	  <div class="popup" onclick="myFunction4()"><font color="blue"><br>Storage modulus
+	    G<sup>'</sup> (elastic contribution to the dynamical shear
+	    modulus) ...</font>
+	    <span class="popuptext" id="myPopup4">Storage modulus
+	    <font color="red">G<sup>'</sup></font> (elastic
+	    contribution to the dynamical shear modulus) against
+	    frequency of an applied shear
+	    strain <font color="red">&omega;</font>, for
+	    connectivities <font color="red">z</font> above, below and
+	    approximately at the marginal
+	    point <font color="red">z<sub>c</sub></font>. Data scales
+	    as <font color="red">G<sup>'</sup> &prop;
+	    &omega;<sup>&alpha;</sup>k<sup>1-&alpha;</sup></font>
+	    at <font color="red">z = z<sub>c</sub></font>, with
+	    scaling exponent <font color="red">&alpha;</font>
+	    indicated in the plot.</span>
+	  </div>
+        </div>
+	
+        <div class="col-md-6">
+          <p class="lead">Viscoelastic networks: dynamical behaviour</p>
+
+	  <p>Another interesting aspect of marginal networks is their
+	  behaviour in the presence of a solvent. When a dynamical
+	  shear (e.g. a shear strain with a fixed amplitude which
+	  oscillates with frequency <font color="red">&omega;</font>)
+	  is applied to a network in a fluid, a viscous drag will act
+	  on it. Furthermore, as the network collide with the fluid
+	  particles it generates a hydrodynamic flow field, allowing
+	  the network filaments to interact with each other via the
+	  fluid. For such a dynamically oscillating system one can
+	  measure the dynamical shear
+	  modulus <font color="red">G<sup>*</sup> = G<sup>'</sup> +
+	  G<sup>''</sup></font>,
+	  with <font color="red">G<sup>'</sup></font> the storage
+	  modulus (the stored energy, i.e. the elastic part from the
+	  springs) and <font color="red">G<sup>''</sup></font> the
+	  loss modulus (the energy dissipated as heat, i.e. the
+	  viscous part). </p>
+
+	  <p>For networks which are mechanically floppy one would
+          expect the modulus to behave as
+          a <a href="https://en.wikipedia.org/wiki/Maxwell_material">Maxwell
+          fluid</a>, where the storage modulus, for example, scales
+          with the shear frequency as <font color="red">G<sup>'</sup>
+          &prop;
+          &omega;<sup>2</sup></font>. <a href="http://www.itp.tu-berlin.de/fileadmin/a3233/upload/AG_Stark/Publikationen_PDF/2016/DennisonStark.pdf">Using
+          computer simulations</a> we show that this is indeed the
+          case for sub-marginal networks. For marginal networks,
+          however, one finds, as for temperature, a sub-linear
+          scaling, with <font color="red">G<sup>'</sup> &prop;
+          &omega;<sup>&alpha;</sup>k<sup>1-&alpha;</sup></font>,
+          with <font color="red">&alpha;<1</font>, again resulting in
+          a network which is anomalously rigid. Interestingly, the
+          exponent <font color="red">&alpha;</font> depends on the
+          strength of the hydrodynamic interactions between the
+          network nodes, and can in fact be controlled by varying
+          parameters such as the density of the fluid, giving another
+          potential control parameter for the system
+          behaviour.<br><br><br><br></p>
+        </div>
+      </div>
+      
+     
+    </div> <!-- /container -->
+
+
+
+
+
+    <div class="container">        
+      <!-- -------------------- -->
+      <!--       NETWORKS       -->
+      <!-- -------------------- -->
+      
+      <div class="row" id="elastic networks">
+        <div class="col-sm-offset-1 col-md-6">
+          <p class="lead" >And in reality: Detecting marginal networks in experiments</p>
+	  
+          <p>While marginal networks could potentially be very useful
+          materials, experimental evidence for the critical behaviour
+          associated with them has thus-far been limited. It is firstly
+          very difficult to create a network whose connectivity is at
+          or close to the marginal point. Secondly, simulation and
+          theoretical evidence indicates that the interesting
+          behaviour occurs when the constituent filaments are
+          relatively stiff. Synthetic polymer networks tend to allow
+          for greater control over the network topology, but they tend
+          to be relatively soft. Biopolymers are much stiffer, but one
+          has less control over the network
+          topology. <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4275588/">Recent
+          advances</a> in the production of synthetic polymers have
+          produced networks that are of comparable stiffness to
+          biopolymer networks, while allowing for control over the
+          network topology, potentially paving the way for producing
+          marginal networks.</p>
+	  
+          <p>This still leaves the question of how to detect marginal
+          networks. One solution would be to look for signs of
+          marginal behaviour in the network's response to
+          deformation. Unsurprisingly, it is not really feasible in
+          experiments to vary parameters such as the temperature by
+          the many orders of magnitude that is possible in computer
+          simulations. However, one parameter which can be varied over
+          a sufficiently large range is the shear
+          stress <font color="red">&sigma;</font>. <a href="http://pubs.rsc.org/-/content/articlelanding/2016/sm/c6sm01033d/unauth#!divAbstract">Using
+          both experimental studies and computer simulations</a> we
+          have found that the response of networks of synthetic
+          semi-flexible polymer to shear stress exhibits marginal-like
+          behaviour, scaling as <font color="red">G<sup>'</sup> &prop;
+          &sigma;<sup>&alpha;</sup>k<sup>1-&alpha;</sup></font>, even
+          in networks well below the marginal point, giving the first
+          experimental evidence for such behaviour in filamentous
+          polymer networks. <br><br><br><br></p>
+	  
+        </div>
+        <div class="col-md-4">
+	  <p><br><br></p>
+          <img class="img-rounded" class="featurette-image img-responsive" src="pics/PD_nijmegen_new.jpg" alt="Model elastic network" width=90%>
+	   <div class="popup"
+	    onclick="myFunction5()"><font color="blue"><br>Phase
+	    diagram for semi-flexible polymer networks ...</font>
+	    <span class="popuptext" id="myPopup5">Phase diagram for
+	    semi-flexible polymer networks in
+	    the <font color="red">&sigma;-z</font> (shear stress -
+	    connectivity) representation, showing the dependence of
+	    the differential modulus <font color="red">K</font>
+	    on <font color="red">&sigma;</font> and spring
+	    constant <font color="red">k</font> for different regions
+	    in the phase space.</span>
+	  </div>
+        </div>
+      </div>
+      
+     
+    </div> <!-- /container -->
+
+
+    
+    
+    
+    <hr>
+    <div class="container">      
+      <footer>
+	<p>&copy; 2017 Matthew Dennison.</p>
+      </footer>
+    </div> 
+    
+    <!-- Bootstrap core JavaScript
+	 ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="jquery.min.js"><\/script>')</script>
+      <script src="bootstrap.min.js"></script>
+      <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+      <script src="ie10-viewport-bug-workaround.js"></script>
+
+      <script>
+	function myFunction1() {
+	var popup = document.getElementById("myPopup1");
+	popup.classList.toggle("show");
+	}
+      </script>
+      <script>
+	function myFunction2() {
+	var popup = document.getElementById("myPopup2");
+	popup.classList.toggle("show");
+	}
+      </script>
+      <script>
+	function myFunction3() {
+	var popup = document.getElementById("myPopup3");
+	popup.classList.toggle("show");
+	}
+      </script>
+      <script>
+	function myFunction4() {
+	var popup = document.getElementById("myPopup4");
+	popup.classList.toggle("show");
+	}
+      </script>
+      <script>
+	function myFunction5() {
+	var popup = document.getElementById("myPopup5");
+	popup.classList.toggle("show");
+	}
+      </script>
+      <script>
+	var modal = document.getElementById('myModal');
+
+	var img = document.getElementById('myImg');
+	var modalImg = document.getElementById("img01");
+	var captionText = document.getElementById("caption");
+	img.onclick = function(){
+	modal.style.display = "block";
+	modalImg.src = this.src;
+	captionText.innerHTML = this.alt;
+	}
+
+	var span = document.getElementsByClassName("close")[0];
+
+	span.onclick = function() { 
+	modal.style.display = "none";
+	}
+      </script>
+
+
+  </body>
+</html>
