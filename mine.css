@@ -1,6 +1,6 @@
 .jumbotron {
     background-image: url('pics/8-2.jpg');
-    background-size: 50%;
+    background-size: 45%;
     background-attachment: fixed;
 }
 
@@ -25,7 +25,7 @@ p.ontop {
 .bar {
   height: 10em;
   padding-top: 2em;
-  opacity: 0.5;
+  opacity: 0.333;
   background: #ffffff;
   /*border-top: 3px solid #ccc;*/
   /*border-bottom: 3px solid #ccc;*/
