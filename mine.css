@@ -6,8 +6,55 @@
 
 p.thick {font-weight:bold;}
 
+#plot {
+  height: 200px;
+}
 
 
+#matrix input {
+  width: 4em;
+}
+
+#graph svg circle {
+  cursor: pointer;
+}
+
+#graph svg text {
+  cursor: pointer;
+}
+
+#stats table {
+  border: none;
+}
+
+#stats table th {
+  border-bottom: 1px solid black;
+  text-align: right;
+}
+
+#stats td {
+  text-align: right;
+  width: 50px;  
+}
+
+#stats td:first-child {
+  width: 100px;
+  text-align: left;
+}
+  
+#buttons {
+  font-size: 11pt;
+}
+
+#buttons span {
+  margin-left: 1em;
+}
+
+#buttons input {
+  margin-left: 1em;
+  width: 6em;
+}
+  
 
 h1.ontop {
   position: relative;
