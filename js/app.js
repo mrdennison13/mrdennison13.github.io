@@ -263,8 +263,8 @@ function Application() {
 	app.model.set("pi_out", pi_tmp);
 
 	if (app.steps > 1){
-	   // var error = ((app.pisq_out/(app.steps) - (app.pi_out / (app.steps))**2) / (app.steps-1))**0.5;
-	    var error = ((app.pisq_out/app.steps - pi_tmp**2) / (app.steps-1))**0.5;
+	   // var error = ((app.pisq_out/(app.steps) - pi_tmp**2) / (app.steps-1))**0.5;
+	    var error = ((app.pisq_out - app.steps * pi_tmp**2) / (app.steps * (app.steps-1)))**0.5;
 	} else{
 	    var error = 0.0;
 	}
