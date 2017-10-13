@@ -194,10 +194,10 @@ function Application() {
 
     function performSteps(nsteps) {
 
-	function getStatePosition(x,y) {
+/*	function getStatePosition(x,y) {
 	    return new Vector(
 		app.svgWidth/2 + 2.0*app.circleRadius*x, app.svgHeight/2 - 2.0*app.circleRadius*y);
-	}  
+	} */ 
 
 	var i;
 	if (nsteps == undefined) {
@@ -234,19 +234,23 @@ function Application() {
 	    stateCount[nextState]++;
 	    curState = nextState;
 
-	    var position = getStatePosition(x,y);
+	   // var position = getStatePosition(x,y);
+
+	    x = app.svgWidth/2 + 2.0*app.circleRadius*x;
+	    y = app.svgHeight/2 - 2.0*app.circleRadius*y;
+	    
 	    if(nextState==0){
 		var circle = createSvgElement("circle");
-		circle.setAttribute("cx", position.x);
-		circle.setAttribute("cy", position.y);
+		circle.setAttribute("cx", x);
+		circle.setAttribute("cy", y);
 		circle.setAttribute("r", app.stateSize / 2);
 		circle.setAttribute("fill", "blue");
 		circle.setAttribute("fill-opacity", "0.4");
 		app.svg.appendChild(circle);
 	    } else{
 		var circle = createSvgElement("circle");
-		circle.setAttribute("cx", position.x);
-		circle.setAttribute("cy", position.y);
+		circle.setAttribute("cx", x);
+		circle.setAttribute("cy", y);
 		circle.setAttribute("r", app.stateSize / 2);
 		circle.setAttribute("fill", "red");
 		app.svg.appendChild(circle);
@@ -322,15 +326,6 @@ function Application() {
 	}
     }
     
-    this.setInput_In = function(input_in) {
-	for (var i = 0; i < app.nstates; i++) {
-	    for (var j = 0; j < app.nstates; j++) {
-		var value = input_in[i][j];
-		value = +value.toFixed(2);
-		app.model.set("prob" + i + "," + j, value);
-	    }
-	}
-    };
 
     this.stopSimulation = function() {
 	app.selectState(app.getState());
@@ -348,17 +343,8 @@ function Application() {
 
     this.startSimulation = function() {
 	app.stopSimulation();
-
 	var speed = parseInt(app.model.get("speed"));
-	if (speed <= 30) {
-	    // do one step per call, and call each 1/speed seconds
-	    app.timer = setInterval(app.runSimulationSteps(1), 1000 / speed);
-	} else {
-	    app.timer = setInterval(app.runSimulationSteps(1), 1000 / speed);
-	    // call roughly each 50 ms and do a number of steps in the same call 
-	   // var steps = Math.ceil(speed / 30); 
-	   // app.timer = setInterval(app.runSimulationSteps(steps), 1000 * steps / speed);
-	}
+	app.timer = setInterval(app.runSimulationSteps(1), 1000 / speed);
     };
     
     this.resetSimulation = function() {
