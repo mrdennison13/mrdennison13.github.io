@@ -7,22 +7,19 @@ function Application() {
     var app = this;
 
     this.model = new Model();
-    this.stateMargin = 20;
-    this.stateSize = 2;
-    this.arrowSize = 5;
-    this.stateFontSize = 24;
+    this.imgMargin = 20;
+    this.pointSize = 2;
     this.nstates = 2;
     this.ntrial;
     this.steps = 0;
-    this.showPlot = true;
     this.pi_out=0.0;
     this.pisq_out=0.0;
     this.error_out=0.0;
     this.pi_act = 3.14159265358979;
-    this.out_length = 6+2;
+    this.out_length = 6+2;       //how many sf to use to output pi
     this.pi_str = "0.000000";
     this.er_str = "0.000000";
-    this.samplePath = [[0,0,0]];
+    this.pi_Path = [[0,0,0]];
     
     this.svg;
     this.circleRadius = 180;
@@ -31,12 +28,12 @@ function Application() {
 
     
 
-    function createGraph() {
+    function createImg() {
 
 	app.svg = createSvgElement("svg");
 
-	app.svgWidth = 2 * app.circleRadius + app.stateSize + 2 * app.stateMargin;
-	app.svgHeight = 2 * app.circleRadius + app.stateSize + 2 * app.stateMargin;
+	app.svgWidth = 2 * app.circleRadius + 2 * app.imgMargin;
+	app.svgHeight = 2 * app.circleRadius + 2 * app.imgMargin;
 
 	app.svg.setAttribute("width", app.svgWidth);
 	app.svg.setAttribute("height", app.svgHeight);
@@ -155,49 +152,40 @@ function Application() {
     }
 
     function createPlot() {
-	if (app.showPlot) {
-	   // app.dygraph = new Dygraph(document.getElementById("plot"), app.samplePath, {
-	    app.dygraph = new Dygraph(document.getElementById("plot"), app.samplePath, {
-		showRoller: false,
-		labels: ['Iter','pi_act','pi_calc'],
-		errorBars: true,
-		//ylabel: 'pi',
-		//xlabel: 'iterations',
-		series: {
-		    'pi_act':{
-			strokeWidth : 6,
-			color : "black"
-			//drawPoints: true,
-			//pointSize: 4//,
-			//errorBars: true
-		    },
-                    'pi_calc': {
-			drawPoints: true,
-			drawPointCallback : Dygraph.Circles.TRIANGLE,
-			drawHighlightPointCallback : Dygraph.Circles.TRIANGLE,
-			color : "red",
-			strokeWidth : 2.5,
-			fillAlpha : 0.3,
-			pointSize: 3.5
-		    }
+	app.dygraph = new Dygraph(document.getElementById("plot"), app.pi_Path, {
+	    showRoller: false,
+	    labels: ['Iter','pi_act','pi_calc'],
+	    errorBars: true,
+	    //ylabel: 'pi',
+	    //xlabel: 'iterations',
+	    series: {
+		'pi_act':{
+		    strokeWidth : 6,
+		    color : "black"
+		    //drawPoints: true,
+		    //pointSize: 4//,
+		    //errorBars: true
+		},
+                'pi_calc': {
+		    drawPoints: true,
+		    drawPointCallback : Dygraph.Circles.TRIANGLE,
+		    drawHighlightPointCallback : Dygraph.Circles.TRIANGLE,
+		    color : "red",
+		    strokeWidth : 2.5,
+		    fillAlpha : 0.3,
+		    pointSize: 3.5
 		}
-	    });
-	}
+	    }
+	});
     }
 
     function updatePlot() {
-	if (app.showPlot) {
-	    app.dygraph.updateOptions( { 'file': app.samplePath } );
-	}
+	app.dygraph.updateOptions( { 'file': app.pi_Path } );
     }
 
 
     function performSteps(nsteps) {
 
-/*	function getStatePosition(x,y) {
-	    return new Vector(
-		app.svgWidth/2 + 2.0*app.circleRadius*x, app.svgHeight/2 - 2.0*app.circleRadius*y);
-	} */ 
 
 	var i;
 	if (nsteps == undefined) {
@@ -230,11 +218,9 @@ function Application() {
 		nextState = 1;
 	    }    
 	    app.model.set("count-" + nextState, app.model.get("count-" + nextState) + 1);
-	    //app.samplePath.push([currentTime + step, nextState + 1]);
+	    //app.pi_Path.push([currentTime + step, nextState + 1]);
 	    stateCount[nextState]++;
 	    curState = nextState;
-
-	   // var position = getStatePosition(x,y);
 
 	    x = app.svgWidth/2 + 2.0*app.circleRadius*x;
 	    y = app.svgHeight/2 - 2.0*app.circleRadius*y;
@@ -243,7 +229,7 @@ function Application() {
 		var circle = createSvgElement("circle");
 		circle.setAttribute("cx", x);
 		circle.setAttribute("cy", y);
-		circle.setAttribute("r", app.stateSize / 2);
+		circle.setAttribute("r", app.pointSize / 2);
 		circle.setAttribute("fill", "blue");
 		circle.setAttribute("fill-opacity", "0.4");
 		app.svg.appendChild(circle);
@@ -251,7 +237,7 @@ function Application() {
 		var circle = createSvgElement("circle");
 		circle.setAttribute("cx", x);
 		circle.setAttribute("cy", y);
-		circle.setAttribute("r", app.stateSize / 2);
+		circle.setAttribute("r", app.pointSize / 2);
 		circle.setAttribute("fill", "red");
 		app.svg.appendChild(circle);
 	    }
@@ -295,11 +281,11 @@ function Application() {
 	app.model.set("error_out", error);
 
 	if (app.steps == 1){
-	   // app.samplePath = [[app.steps*app.ntrial, app.pi_act, app.pi_out / app.steps]];
-	    app.samplePath = [[app.steps*app.ntrial, [app.pi_act,0.0], [app.pi_out / app.steps, error]]];
+	   // app.pi_Path = [[app.steps*app.ntrial, app.pi_act, app.pi_out / app.steps]];
+	    app.pi_Path = [[app.steps*app.ntrial, [app.pi_act,0.0], [app.pi_out / app.steps, error]]];
 	} else{
-	   // app.samplePath.push([app.steps*app.ntrial, app.pi_act, app.pi_out / app.steps]);
-	    app.samplePath.push([app.steps*app.ntrial, [app.pi_act,0.0], [app.pi_out / app.steps, error]]);
+	   // app.pi_Path.push([app.steps*app.ntrial, app.pi_act, app.pi_out / app.steps]);
+	    app.pi_Path.push([app.steps*app.ntrial, [app.pi_act,0.0], [app.pi_out / app.steps, error]]);
 	}
 	
 	for (i = 0; i < app.nstates; i++) {
@@ -358,14 +344,14 @@ function Application() {
 	app.pisq_out = 0.0;
 	app.error_out = 0.0;
 	app.steps = 0
-	app.samplePath = [[0,0,0]];
+	app.pi_Path = [[0,0,0]];
 	for (var i = 0; i < app.nstates; i++) {
 	    app.model.set("count-" + i, 0);
 	    app.model.set("percentage-" + i, "-");
 	}
 	//reset the plot
 	document.getElementById("graph").removeChild(app.svg);
-	createGraph();
+	createImg();
 	updatePlot();
     };
     
@@ -385,7 +371,7 @@ function Application() {
 
     this.start = function() {
 	createButtons();
-	createGraph();
+	createImg();
 	createInput_In();
 	createStats();
 	createPlot();
