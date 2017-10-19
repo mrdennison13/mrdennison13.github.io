@@ -27,16 +27,26 @@
     <script src="ie-emulation-modes-warning.js"></script>
 
 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="jquery.min.js"><\/script>')</script>
+    <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+    
     <script src="bootstrap.min.js"></script>
     <script src="js/model.js"></script>
     <script src="js/mc.js"></script>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    
     
     <script type="text/javascript" src="js/dygraph.js"></script>
-    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+    <script type="text/javascript" async
+	    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+    
+   <!-- <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>-->
     <link rel="stylesheet" type="text/css" href="bootstrap.css">
     <link rel="stylesheet" src="dygraph.css" >
 
@@ -78,6 +88,7 @@
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <b class="caret"></b></a>
               <ul class="dropdown-menu">
 		<li><a href="MC.html">Monte Carlo</a></li>
+		<li><a href="buffon.html">Buffon's needle</a></li>
 		<!-- 	<li><a href="notes.html">Notes</a></li>-->
               </ul>
             </li>
@@ -107,22 +118,74 @@
     <div class="container-fluid">
       <div class="col-md-12">
 	<center>
-	  <h1>Approximating <font color="red">&pi;</font> using Monte Carlo</h1>
+	  <h1><font color="#3498DB">Approximating <font color="red">&pi;</font> using Monte Carlo Integration</font> <br> </h1>
 	</center>
-	<div class="col-sm-offset-2 col-md-8">
-	  <li>Take a square of length <font color="red">L</font> and draw a circle of radius <font color="red">D = L</font> inside.</li>
-	  <li>Place points randomly inside the square: <font color="red">n_iterations</font>.</li>
-	  <li>Count the number that fall within the circle: <font color="red">n_over</font>.</li>
-	  <li><font color="red">&pi;</font> can be calculated as: <font color="red">4*n_over/n_iterations</font>. </li><br />
+
+	<!--	<div class="col-sm-offset-2 col-md-8">-->
+	
+	<div class="col-sm-offset-1 col-md-10">
+	  <p><br>
+
+	    <!--Monte Carlo (MC) integration allows us to compute
+	    definate integrals by randomly choosing points at which
+	    the integrand is evaluated.-->
+
+	    In this example we calculate <font color="red">&pi;</font>
+	    by placing random points in the square below, and counting
+	    the number that fall within the circle. The ratio of the
+	    number that fall within the circle to the total number of
+	    points (number of MC
+	    iterations, <font color="red">n<sub>iter</sub></font>) is
+	    proportional to <font color="red">&pi;</font>. </p>
+
+	  <p>The MC iterations are split into batches
+	    of <font color="red">n_trial</font> iterations. After each
+	    batch, an estimate of <font color="red">&pi;</font> is
+	    calculated, <font color="red">&pi;<sub>sub</sub></font>. The
+	    average of these gives our estimate
+	    of <font color="red">&pi;</font>, while the standard
+	    deviation can be used to find the statistical error, shown
+	    in the top left plot. The error will decrease
+	    as <font color="red">(n<sub>iter</sub>)<sup>-0.5</sup></font>,
+	    shown in the bottom left plot.</p>
+
+	  <p>
+
+	    <!--Changing <font color="red">n_trial</font> has no
+	    effect on the magnitude of the error after a
+	    given <font color="red">n<sub>iter</sub></font>. It does,
+	    however, change the distribution
+	    of <font color="red">&pi;<sub>sub</sub></font> values.-->
+
+	    We are essentially sampling from a binomial distribution
+	    which has probability <font color="red"> P = &pi;/4</font>
+	    of a success (i.e. the point is within the circle)
+	    for <font color="red">n = n_trial</font> independent
+	    experiments. According to the central-limit theorem, if we
+	    draw a large number of random samples from any type of
+	    distribution, the distribution
+	    of <font color="red">&pi;<sub>sub</sub></font> values will
+	    always be a normal distribution, shown in the bottom right
+	    plot. Try varying <font color="red">n_trial</font> to see
+	    how this changes.
+
+	    <!--, with a mean equal to
+	    the mean of the original distribution and variance equal
+	    to the distribution variance divided by the sample
+	    size. The distribution
+	    of <font color="red">&pi;<sub>sub</sub></font> values is
+	    shown in the bottom right plot.-->
 	    
+	    <br><br><br></p>
+
 	</div>
+	
 	<div class="row">
 	  <div class="col-sm-offset-1 col-md-5">
 	    <p style="text-align:center; font-size: 150%">
 	      <font color="red">&pi;</font> against number of MC iterations</p>
 	    <p style="text-align:center; font-size: 100%">Zoom: click and drag, Restore: double click</p>
-	    <div id="plot"></div><br />
-	    
+	    <div id="plot" style="width:600px; height:200px;"></div><br />
 	    <div class="row">
               <div class="col-sm-offset-1 col-md-5">
 		<h4>Input</h4>
@@ -145,17 +208,89 @@
 	    </center>
 	  </div>
 	</div>
-      </div>
+
+	<p class="bottom-two"></p>
+ 	
+      </div>     
     </div>
 
 
+    <div class="container">
+      <div class="col-md-12">
+	<div class="row">
+	  <div class="col-md-5">
+	    <center>
+	      <h4>&#37; error in the calculation</h4><br />
+	    </center>
+	    <div id="error_plot" style="width:450px; height:220px;"></div><br />
 
+	    <p> Percentage error in <font color="red">&pi;</font>
+	      against the number of MC
+	      iterations <font color="red">n<sub>iter</sub></font>. Red
+	      circles shows the result, while the solid black line shows
+	      the expected value, given as the standard deviation of the
+	      underlying distribution function divided by the
+	      square-root of the number of
+	      iterations, <font color="red">(n<sub>iter</sub>)<sup>-0.5</sup></font>.</p>
 
+	    <p>The error in our result is given by:</p>
+	 <!--   <p> <font color="red"> (&#91; &lang;&pi;<sup>2</sup>&rang; - &lang;&pi;&rang;<sup>2</sup> &#93;  (n_iteration-1) )<sup>0.5</sup></font></p>
+	    <p> (<sup> (&lang;&pi;<sup>2</sup>&rang; - &lang;&pi;&rang;<sup>2</sup>)</sup>&frasl;<sub>(n_iteration-1)</sub>)<sup>0.5</sup> </p>-->
+	    
+	    <div lang="latex">
+	      \mathrm{error} = \left(\frac{\langle\pi^2\rangle-\langle\pi\rangle^2}{n_{iter}-1}\right)^{0.5},
+	    </div>
+	    <p>where <font color="red">&lang;...&rang;</font> denotes
+	    the mean after <font color="red">n<sub>iter</sub></font>
+	    iterations</p>
+	    
+	   <!-- <li>Take a square of length <font color="red">L</font>
+	   and draw a circle of diameter <font color="red">D =
+	   L</font> inside.</li>
+	    <li>Place <font color="red">n_iteration</font> points randomly inside the square.</li>
+	    <li>Count the number that fall within the circle: <font color="red">n_over</font>.</li>
+	    <li>The probability that a point falls in the circle is then <font color="red"> P = n_over/n_iteration</font>.</li>
+	    <li>It is also given by the ratio of the circle area to the square area: <font color="red"> P = &pi;(D/2)<sup>2</sup> / L<sup>2</sup> = &pi;/4</font>.</li>
+	    <li>If we equate the two, <font color="red">&pi;</font> can be calculated as: <font color="red">&pi; = 4*n_over/n_iteration</font>. </li>-->
 
+	  </div>
+	  <div class="col-sm-offset-1 col-md-5">
+	    <center>
+	      <h4>Distribution of results</h4><br />
+	    </center>    
+	    <div id="hist_plot" style="width:450px; height:220px;"></div><br />
 
-    
-    
-    
+	    <p>Probability density function
+	    of <font color="red">&pi;<sub>sub</sub></font> values. Red
+	    circles are calculated result, solid black line is the
+	    expected result based on the central-limit theorem i.e. a
+	    normal distribution.</p>
+
+	    <!-- <li>We are essentially picking numbers from a binomial
+		 distribution with probability <font color="red"> P = &pi;/4</font>
+		 of a success (the point is within the circle) and <font color="red">n = ntrials</font> independent experiments.</li>
+		 <li>According to the central-limit theorem, if we draw a
+		   large number of random samples from any type of
+		   distribution, the distribution of sample-means will
+		   always be a Gaussian distribution, with a mean equal to
+		   the mean of the original distribution and variance equal
+		   to the distribution variance divided by the sample
+		   size.</li>
+	    <li>In our case, the mean is <font color="red"> &mu; =
+		ntrials &pi;/4</font> and the variance
+	      is <font color="red"> &sigma;<sup>2</sup> = ntrials
+		&pi;/4</font>.</li><br />
+	    <center>
+	      <math>
+		<mi>I</mi><mo>&#x2260;</mo><mn>&#x222b;</mn>
+	      </math>
+	    </center>-->
+
+	    
+	  </div>
+	</div>
+      </div> 
+    </div> 
     <hr>
     <div class="container">      
       <footer>

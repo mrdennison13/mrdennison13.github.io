@@ -24,6 +24,16 @@ function Application() {
     this.pi_str = "0.000000";
     this.er_str = "0.000000";
     this.pi_Path = [[0,0,0]];
+    this.error_Path = [[0,0,0]];
+    this.pi_for_hist = [];
+    this.pi_range = [];
+    this.hist = [];
+    this.n_pi;// = 101;
+    this.pi_min = 0.0;
+    this.pi_max = 4.0;//4.0;
+    this.hist_Path = [];
+    this.dpi;// = (app.pi_max-app.pi_min)/app.n_pi;
+    this.std_act;
     
     this.svg;
     this.circleRadius = 180;
@@ -68,8 +78,9 @@ function Application() {
     
     function createInput_In() {
 
-
-	var NTLabel = new Span("ntrials: ");
+	var str = "n_trial: ";
+//	str = "n"+str.sub()+": ";
+	var NTLabel = new Span(str);
 	var NTInput_In = new ModelInput(app.model, "n_trials");
 	var speedLabel = new Span("speed: ");
 	var speedInput_In = new ModelInput(app.model, "speed");
@@ -183,17 +194,109 @@ function Application() {
 	});
     }
 
+
+
+    function createErrorPlot() {
+	app.dygraph_er = new Dygraph(document.getElementById("error_plot"), app.error_Path, {
+	    axes: {
+		x: {logscale : true}
+	    },
+	    showRoller: false,
+	    labels: ['Iter','er_act','er_calc'],
+	    errorBars: true,
+	    logscale : true,
+
+	    series: {
+		'er_act':{
+		    strokeWidth : 6,
+		    color : "black"
+		},
+                'er_calc': {
+		    drawPoints: true,
+		    drawPointCallback : Dygraph.Circles.TRIANGLE,
+		    drawHighlightPointCallback : Dygraph.Circles.TRIANGLE,
+		    color : "red",
+		    strokeWidth : 2.5,
+		    fillAlpha : 0.3,
+		    pointSize: 3.5
+		}
+	    }
+	});
+    }
+
+
+    function createHistPlot() {
+	app.dygraph_hist = new Dygraph(document.getElementById("hist_plot"), app.hist_Path, {
+	    showRoller: false,
+	    labels: ['Iter','hist_act','hist_calc'],
+	    dateWindow: [app.pi_min, app.pi_max],
+	    series: {
+		'hist_act':{
+		    strokeWidth : 6,
+		    color : "black"
+		},
+                'hist_calc': {
+		    drawPoints: true,
+		    drawPointCallback : Dygraph.Circles.TRIANGLE,
+		    drawHighlightPointCallback : Dygraph.Circles.TRIANGLE,
+		    color : "red",
+		    strokeWidth : 2.5,
+		    fillAlpha : 0.3,
+		    pointSize: 3.5
+		}
+	    }
+	});
+    }
+
+
+
+    function createHist() {
+//	var x = [];
+//	for (var i = 0; i < 500; i ++) {
+//	    x[i] = Math.random();
+//	}
+
+	var layout = {
+	    autosize: false,
+	    width: 500,
+	    height: 250,
+	    margin: {
+		l: 50,
+		r: 10,
+		b: 50,
+		t: 10,
+		pad: 4
+	    },
+	};
+	
+	var trace = {
+	    x: app.pi_for_hist,
+	    type: 'histogram',
+	  //  cumulative: {enabled: true},
+	    histnorm: 'probability',
+	    nbinsx: 25,
+	};
+	var data = [trace];
+	    Plotly.newPlot('myDiv', data, layout);
+    }
+
+
+
+    
+
     function updatePlot() {
 	app.dygraph.updateOptions( { 'file': app.pi_Path } );
+	app.dygraph_er.updateOptions( { 'file': app.error_Path } );
+	app.dygraph_hist.updateOptions( { 'file': app.hist_Path } );
+	app.dygraph_hist.updateOptions( { dateWindow : [app.pi_min-app.dpi, app.pi_max+app.dpi] } );
+	Plotly.redraw('myDiv');
+//	app.dygraph_hist.updateOptions( { 'file': app.hist_Path } );
     }
 
 
     function performSteps() {
 
-
 	var i;
-
-	var curState = app.model.get("state");
 	
 	var stateCount = [];
 	for (i = 0; i < app.nstates; i++) {
@@ -202,29 +305,38 @@ function Application() {
 
 	if (app.steps < 1){
 	    app.ntrial = app.model.get("n_trials");
+	    app.std_act = 100.0*Math.sqrt((4.0*app.pi_act - app.pi_act*app.pi_act)/app.ntrial)/app.pi_act;
+	    
+	    app.n_pi = app.ntrial+1;
+	    app.dpi = (app.pi_max-app.pi_min)/app.ntrial;
+	    for (var i = 0; i < app.n_pi; i++) {
+		app.hist[i] = 0;
+		if (i==0){
+		    app.hist_Path = [[app.pi_min + i*app.dpi, 0 , 0]];
+		}else{
+		    app.hist_Path.push([app.pi_min + i*app.dpi, 0, 0]);
+	}    
+    }
+
 	}
 	
 	var n_over = 0;
-	
+	var i_in;
+	var x;
+	var y;
+	var r;
 	for (var step = 0; step < app.ntrial; step++) {
-	    var nextState ;//= app.nstates - 1;
-	    var x = Math.random()-0.5;
-	    var y = Math.random()-0.5;
-	    var r = x*x + y*y
+	    
+	    x = Math.random()-0.5;
+	    y = Math.random()-0.5;
+	    r = x*x + y*y
 	    if (r <= 0.25){
 		n_over ++;
-		nextState = 0;
-	    } else {
-		nextState = 1;
-	    }    
-	    app.model.set("count-" + nextState, app.model.get("count-" + nextState) + 1);
-	    stateCount[nextState]++;
-	    curState = nextState;
+		i_in = 0;
 
-	    x = app.svgWidth/2 + 2.0*app.circleRadius*x;
-	    y = app.svgHeight/2 - 2.0*app.circleRadius*y;
-	    
-	    if(nextState==0){
+		x = app.svgWidth/2 + 2.0*app.circleRadius*x;
+		y = app.svgHeight/2 - 2.0*app.circleRadius*y;
+
 		var circle = createSvgElement("circle");
 		circle.setAttribute("cx", x);
 		circle.setAttribute("cy", y);
@@ -232,20 +344,34 @@ function Application() {
 		circle.setAttribute("fill", "blue");
 		circle.setAttribute("fill-opacity", "0.4");
 		app.svg.appendChild(circle);
-	    } else{
+		
+		
+	    } else {
+		i_in = 1;
+		
+		x = app.svgWidth/2 + 2.0*app.circleRadius*x;
+		y = app.svgHeight/2 - 2.0*app.circleRadius*y;
+
 		var circle = createSvgElement("circle");
 		circle.setAttribute("cx", x);
 		circle.setAttribute("cy", y);
 		circle.setAttribute("r", app.pointSize / 2);
 		circle.setAttribute("fill", "red");
 		app.svg.appendChild(circle);
-	    }
+		
+		
+	    }    
+
+	    app.model.set("count-" + i_in, app.model.get("count-" + i_in) + 1);
+
 	}
+	
 	document.getElementById("graph").appendChild(app.svg);
 
 	app.steps = app.steps + 1;
 	app.model.set("steps", app.steps*app.ntrial);
-	var pi = 4.0*n_over/(app.ntrial);
+	var pi = 4.0*parseFloat(n_over)/parseFloat(app.ntrial);
+
 	app.pi_out = app.pi_out + pi;
 	app.pisq_out = app.pisq_out + pi*pi;
 	var pi_tmp = app.pi_out / app.steps;
@@ -262,8 +388,8 @@ function Application() {
 	app.model.set("pi_out", pi_tmp);
 
 	if (app.steps > 1){
-	   // var error = ((app.pisq_out/(app.steps) - pi_tmp**2) / (app.steps-1))**0.5;
-	    var error = ((app.pisq_out - app.steps * pi_tmp**2) / (app.steps * (app.steps-1)))**0.5;
+	    var variance = app.pisq_out/app.steps - pi_tmp*pi_tmp;
+	    var error = Math.sqrt(variance / (app.steps-1));
 	} else{
 	    var error = 0.0;
 	}
@@ -280,12 +406,45 @@ function Application() {
 	app.model.set("error_out", error);
 
 	if (app.steps == 1){
-	   // app.pi_Path = [[app.steps*app.ntrial, app.pi_act, app.pi_out / app.steps]];
 	    app.pi_Path = [[app.steps*app.ntrial, [app.pi_act,0.0], [app.pi_out / app.steps, error]]];
 	} else{
-	   // app.pi_Path.push([app.steps*app.ntrial, app.pi_act, app.pi_out / app.steps]);
 	    app.pi_Path.push([app.steps*app.ntrial, [app.pi_act,0.0], [app.pi_out / app.steps, error]]);
 	}
+	if (app.steps <= 2){
+	    app.error_Path = [[app.steps*app.ntrial, [app.std_act/Math.sqrt(app.steps),0.0], [0.0, 0.0]]];
+	    //app.error_Path = [[app.steps*app.ntrial, [50.0/Math.sqrt(app.steps*app.ntrial),0.0], [0.0, 0.0]]];
+	} else{
+	    app.error_Path.push([app.steps*app.ntrial, [app.std_act/Math.sqrt(app.steps),0.0], [100.0*app.steps*error/app.pi_out, 0.0]]);
+	    //app.error_Path.push([app.steps*app.ntrial, [50.0/Math.sqrt(app.steps*app.ntrial),0.0], [100.0*app.steps*error/app.pi_out, 0.0]]);
+	}
+
+
+	//var i_r = parseInt((pi-app.pi_min)/app.dpi);
+//	var i_r = parseInt(pi);//parseInt(pi/app.dpi);
+	app.hist[n_over] ++;
+	
+	var pi_mean = app.pi_out / app.steps;
+
+	pi_mean = app.pi_act;
+	variance = (4.0*app.pi_act - app.pi_act*app.pi_act)/app.ntrial;
+	
+	var fac1 = 1.0/Math.sqrt(2.0*app.pi_act*variance);
+	var fac2 = -0.5/variance;
+	for (var i = 0; i < app.n_pi; i++) {
+	    app.hist_Path[i][2] = app.hist[i]/app.steps/app.dpi;
+	    app.hist_Path[i][1] = fac1*Math.exp(fac2*Math.pow( (app.hist_Path[i][0]-pi_mean),2));
+	}
+	
+	app.pi_for_hist[app.steps] = pi
+
+	app.pi_max = app.pi_for_hist.reduce(function(a, b) {
+	    return Math.max(a, b);
+	});
+	app.pi_min = app.pi_for_hist.reduce(function(a, b) {
+	    return Math.min(a, b);
+	});
+	
+
 	
 	for (i = 0; i < app.nstates; i++) {
 	    var count = app.model.get("count-" + i);
@@ -342,6 +501,13 @@ function Application() {
 	app.error_out = 0.0;
 	app.steps = 0
 	app.pi_Path = [[0,0,0]];
+	app.error_Path = [[0,0,0]];
+	app.hist_Path = [[0,0,0]];
+	app.pi_for_hist = [];
+	app.pi_min = 0.0;
+	app.pi_max = 4.0;//4.0;
+
+	
 	for (var i = 0; i < app.nstates; i++) {
 	    app.model.set("count-" + i, 0);
 	    app.model.set("percentage-" + i, "-");
@@ -372,6 +538,9 @@ function Application() {
 	createInput_In();
 	createStats();
 	createPlot();
+	createErrorPlot();
+	createHistPlot();
+//	createHist();
 
 	app.setSpeed(1);
 	app.setNT(100);
