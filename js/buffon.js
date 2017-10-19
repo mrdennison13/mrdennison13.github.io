@@ -333,7 +333,7 @@ function Application() {
 	
 	for (i = 0; i < app.nstates; i++) {
 	    var count = app.model.get("count-" + i);
-	    app.model.set("percentage-" + i, (100 * count / (app.n_steps*app.ntrial)).toFixed(1) + "%  ");
+	    app.model.set("percentage-" + i, (100 * count / (app.n_steps)).toFixed(1) + "%  ");
 	}
 	
 	updatePlot();
