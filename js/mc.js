@@ -413,10 +413,10 @@ function Application() {
 	    app.pi_Path.push([app.steps*app.ntrial, [app.pi_act,0.0], [app.pi_out / app.steps, error]]);
 	}
 	if (app.steps <= 2){
-	    app.error_Path = [[app.steps*app.ntrial, [app.std_act/Math.sqrt(app.steps),0.0], [0.0, 0.0]]];
+	    app.error_Path = [[app.steps*app.ntrial, [app.std_act*1.96/Math.sqrt(app.steps),0.0], [0.0, 0.0]]];
 	    //app.error_Path = [[app.steps*app.ntrial, [50.0/Math.sqrt(app.steps*app.ntrial),0.0], [0.0, 0.0]]];
 	} else{
-	    app.error_Path.push([app.steps*app.ntrial, [app.std_act/Math.sqrt(app.steps),0.0], [100.0*app.steps*error/app.pi_out, 0.0]]);
+	    app.error_Path.push([app.steps*app.ntrial, [app.std_act*1.96/Math.sqrt(app.steps),0.0], [100.0*app.steps*error*1.96/app.pi_out, 0.0]]);
 	    //app.error_Path.push([app.steps*app.ntrial, [50.0/Math.sqrt(app.steps*app.ntrial),0.0], [100.0*app.steps*error/app.pi_out, 0.0]]);
 	}
 
