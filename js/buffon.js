@@ -321,13 +321,15 @@ function Application() {
 	}
 	
 	app.model.set("error_str", app.er_str);
-	app.model.set("error_out", error);
+	app.model.set("error_out", 1.96*error);
 
 	if (app.n_over > 0){
 	    if (app.n_steps == 1){
 		app.pi_Path = [[app.n_steps, [app.pi_act,0.0], [app.pi_out, error]]];
+	//	app.pi_Path = [[app.n_steps, [app.pi_act,0.0], [app.pi_out, Math.sqrt(variance)]]];
 	    } else{
 		app.pi_Path.push([app.n_steps, [app.pi_act,0.0], [app.pi_out, error]]);
+	//	app.pi_Path.push([app.n_steps, [app.pi_act,0.0], [app.pi_out, Math.sqrt(variance)]]);
 	    }
 	}
 	

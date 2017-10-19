@@ -403,11 +403,13 @@ function Application() {
 	}
 	
 	app.model.set("error_str", app.er_str);
-	app.model.set("error_out", error);
+	app.model.set("error_out", error*1.96);
 
 	if (app.steps == 1){
-	    app.pi_Path = [[app.steps*app.ntrial, [app.pi_act,0.0], [app.pi_out / app.steps, error]]];
+	   // app.pi_Path = [[app.steps*app.ntrial, [app.pi_act,0.0], [app.pi_out / app.steps, error]]];
+	    app.pi_Path = [[app.steps*app.ntrial, [app.pi_act,0.0], [app.pi_out / app.steps, error ]]];
 	} else{
+	   // app.pi_Path.push([app.steps*app.ntrial, [app.pi_act,0.0], [app.pi_out / app.steps, error]]);
 	    app.pi_Path.push([app.steps*app.ntrial, [app.pi_act,0.0], [app.pi_out / app.steps, error]]);
 	}
 	if (app.steps <= 2){
