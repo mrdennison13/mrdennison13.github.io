@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <title>Jumbotron Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link href="mine.css" rel="stylesheet">
+    <link href="hover.css" rel="stylesheet">
+    
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="jumbotron.css" rel="stylesheet">
+
+    <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+    <script type="text/javascript" async
+	    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="ie-emulation-modes-warning.js"></script>
+
+    
+  </head>
+
+  <body>
+    
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">Home</a>
+        </div>
+	<div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+	    <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Research <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="research_en.html">Elastic networks</a></li>
+		<li><a href="research_a.html">Active force-dipoles</a></li>
+                <li><a href="research_c.html">Colloidal particles</a></li>
+                <!-- <li class="divider"></li> -->
+              </ul>
+            </li>
+	    <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+		<li><a href="MC.html">Monte Carlo</a></li>
+		<li><a href="buffon.html">Buffon's needle</a></li>
+		<li><a href="notes.html">Notes</a></li>
+              </ul>
+            </li>
+	    <!-- <li><a href="research.html">Research</a></li>-->
+	    <li><a href="pub_list.html" >Publications</a></li>
+	    <li><a href="cv.html">CV</a></li>
+	    <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+	<div class="row-fluid">
+	  <div class="span10">
+            <h1>Matthew Dennison</h1>
+	  </div>
+	</div>
+      </div>
+    </div>
+
+
+
+
+    <div class="container-fluid">
+      <div class="col-md-12">
+<!--	<center>
+	  <h1>Random notes</h1>
+	  <div class="col-sm-offset-2 col-md-8">
+	    <p>Some random bits and pieces to do with coding, algorithms, and whatever else takes my fancy... <br><br><br></p>
+	  </div>
+	</center>-->
+	
+	<div class="row">
+	  <div class="col-sm-offset-1 col-md-2">
+	    <h3>Contents</h3>
+	    <!-- <ul>-->
+	    <li><a href="note_f2py.html">f2py: calling Fortran subroutines from Python</a></li>
+	    <li><a href="note_aliasing.html">Aliasing functions in Fortran</a></li>
+	    <li><a href="note_vectorizing.html">Vectorizing processes in Python</a></li>
+	   <!--  </ul>-->
+	  <!--  <p> </p>-->
+	  </div>
+	  <div class="col-md-8">
+
+	    <h3>f2py: calling fortran subroutines from python</h3>
+
+	    <p>f2py is an increadibly useful little utility that comes
+	      included with numpy. It converts subroutines (and modules)
+	      written in Fortran into Python modules, which can then be
+	      imported as usual. Why would you want to do that? Well, as
+	      covered <a href="note_vectorizing.html">in a pervious
+		note</a>, Fortran is much better suited for many Monte
+	      Carlo applications, while Python is much better for
+	      analysing our data. So, why not combine the power of
+	      both?</p>
+	    
+	    <p>My main interest in this was when building
+	      the <a href="onsager.html">onsager library</a> for Python,
+	      which calculates the virial coefficients using Monte Carlo
+	      integration. This would be increadibly slow in Python, as
+	      for higher order coefficients it is not possible to
+	      vectorize the calculation. Instead, the heavy lifting is
+	      done in a Fortran subroutine, while we can use Python to
+	      fit functions or visualize the results, for example. Here,
+	      I will illustrate the basics of using f2py with a simple
+	      example, namely generating random numbers from a
+	      distribution.<br><br><br></p>
+
+	    <h4>Generating random numbers from a polynomial distribution</h4>
+
+	    <p>Feel free to skips this section if you are only
+	      interested in using f2py, and not on the specific
+	      application.</p>
+	    
+	    <p>Lets assume we want to sample random numbers between 0
+	      and 1 from a distribution function which is given by an
+	      n<sup>th</sup>-order polynomial. It takes the form:</p>
+
+	    <center>
+	      <div lang="latex">
+		f(x) = \displaystyle\frac{\displaystyle\sum^{n}_{i=0} a_{i}x^i}{\displaystyle\sum^{n}_{i=0} \frac{a_{i}}{i+1}} \:\:\:\:\:\:\:\:\:\: \mathrm{for} \:\: 0\le x\le1,
+	      </div>
+	      </br>
+	      <div lang="latex">
+		f(x) = 0 \:\:\:\:\:\:\:\:\:\:\:\:  \mathrm{otherwise},
+	      </div>
+
+	    </center>
+
+	    <p><br>where a<sub>i</sub> are constants that control the
+	    shape of the distribution.</p>
+
+	    <p>We want to pick nin random values from this
+	    distribution for a given set of a<sub>i</sub> values. We
+	    will write a subroutine that takes nin and an array of
+	    size n+1 containing the a<sub>i</sub> values as inputs,
+	    and outputs nin values of x. We will use the
+	    so-called <a href="https://en.wikipedia.org/wiki/Rejection_sampling">rejection
+	    sampling method</a> to generate the numbers, where x and y
+	    values are chosen. If y < f(x), then we keep x, otherwise
+	    we reject it.<br><br><br></p>
+	    
+	    <h4>Prerequisites</h4>
+	    
+	    <p>From the Python side, just Numpy is required in order
+	      to use f2py, though for this example we also need
+	      matplotlib in order to plot the results. From the Fortran
+	      side, a compiler of some sort is required: I use
+	      gfortran.<br><br><br></p>
+
+	    <h4>Writing the Fortran subroutine</h4>
+
+	    <p>We write a Fortran subroutine poly_dist.f90, which
+	      looks like this:</p>
+
+
+<div style="background: #FFFFFF;">
+<pre>
+ <b style="color:#0000FF">SUBROUTINE</b> sample(var_input, nin, n,  var_output)
+
+  <b style="color:#0000FF">USE</b> funcs                           <span style="color:#FF0000">!use the module funcs which contains random_num and poly_func</span>
+
+  <b style="color:#0000FF">IMPLICIT</b> <b style="color:#0000FF">NONE</b>
+
+  <b style="color:#0000FF">INTEGER</b> :: n                        <span style="color:#FF0000">!the order of the polynomial + 1</span>
+  <b style="color:#0000FF">INTEGER</b> :: nin                      <span style="color:#FF0000">!number of random numbers to return</span>
+  <b style="color:#0000FF">REAL</b>(8), <b style="color:#0000FF">DIMENSION</b>(n) :: var_input  <span style="color:#FF0000">!coefficients a_i for the polynomial</span>
+  <b style="color:#0000FF">REAL</b>(8) :: var_output(nin)          <span style="color:#FF0000">!the random numbers that will be returned</span>
+
+  <b style="color:#0000FF">REAL</b>(8) :: x, y, y_max              <span style="color:#FF0000">!local variables</span>
+  <b style="color:#0000FF">INTEGER</b> :: i                        <span style="color:#FF0000">!local variable</span>
+
+  <span style="color:#008000">!f2py intent(in) :: var_input, nin</span>
+  <span style="color:#008000">!f2py intent(hide), depend(var_input) :: n = shape(var_input, 0)</span>
+  <span style="color:#008000">!f2py intent(out):: var_output</span>
+
+  <span style="color:#FF0000">!seed random number generator</span>
+  <b style="color:#0000FF">CALL</b> <b style="color:#0000FF">RANDOM_SEED</b>()
+
+  <span style="color:#FF0000">!set the maximum y value (when x = 1)</span>
+  y_max = poly_func(1.0d0, n, var_input)
+
+  <span style="color:#FF0000">!loop from 1 to nin</span>
+  <b style="color:#0000FF">DO</b> i = 1,nin
+
+101  x = random_num(         <span style="color:#FF0000">!generate a random number between 0 and   1   for x</span>
+     y = y_max*random_num(   <span style="color:#FF0000">!generate a random number between 0 and y_max for y</span>
+
+     <span style="color:#FF0000">!test if y is less than the value of the polynomial</span>
+     <b style="color:#0000FF">IF</b> (y <b style="color:#0000FF">.LT.</b> poly_func(x, n, var_input)) <b style="color:#0000FF">THEN</b>
+        <span style="color:#FF0000">!if yes, then keep the number and store it as the i-th value to output</span>
+        var_output(i) = x
+     <b style="color:#0000FF">ELSE</b>
+        <span style="color:#FF0000">!if not, then generate new x and y</span>
+        <b style="color:#0000FF">GOTO</b> 101
+     <b style="color:#0000FF">END</b> <b style="color:#0000FF">IF</b>
+
+  <b style="color:#0000FF">END</b> <b style="color:#0000FF">DO</b>
+
+ <b style="color:#0000FF">END</b> <b style="color:#0000FF">SUBROUTINE</b> sample
+
+</pre>
+</div>
+	    
+	    <p>Note that there are three lines of code, highlighted in
+	    green, which begin with !f2py. These lines will be used by
+	    f2py to define the input, output and "hidden"
+	    variables:</p>
+	    <OL>
+	      <li>!f2py intent(in) :: var_input, nin</li>
+	      <UL><li>the varibales var_input and nin are required as
+	      inputs when the subroutine is called from
+	      Python.<br><br></li></UL>
+	      
+	      <li>!f2py intent(hide), depend(var_input) :: n = shape(var_input, 0)</li>
+	      <UL><li>the varibale n is not required as an input when
+		  the subroutine is called from Python. Instead, its
+		  value is taken implicitly as the size of the first
+		  dimension of the variable var_input.<br><br></li></UL>
+
+	      <li>!f2py intent(out) :: var_output </li>
+	      <UL><li>the varibale var_output is not required as an
+		  input when the subroutine is called from
+		  Python. Instead, when the subrputine is called,
+		  var_output is returned as though a function is
+		  called. If there is more than one variable defined
+		  as output, then are returned as a Tuple in
+		  Python.<br></li></UL>
+	    </OL>
+
+	    <p>This program also uses two functions declared in a
+	    separate file, functions.f90, which are stored in a module funcs. These
+	    do not have to interface with Python, and are written as
+	    normal in Fortran. Note that for the random numbers we're
+	    using the inbuilt random number generator. Usually we
+	    would NEVER use this (I typically use the GSL generator),
+	    but for simplicity we'll use it here.</p>
+
+<div style="background: #FFFFFF;">
+<pre>
+<b style="color:#0000FF">MODULE</b> funcs
+
+ <b style="color:#0000FF">CONTAINS</b>
+  <b style="color:#0000FF">FUNCTION</b> random_num()
+    <span style="color:#FF0000">! function to generate random numbers</span>
+
+    <b style="color:#0000FF">REAL</b>(8) :: random_num
+
+    <b style="color:#0000FF">CALL</b> <b style="color:#0000FF">RANDOM_NUMBER</b>(random_num)
+
+    <b style="color:#0000FF">RETURN</b>
+  <b style="color:#0000FF">END</b> <b style="color:#0000FF">FUNCTION</b> random_num
+
+
+  <b style="color:#0000FF">FUNCTION</b> poly_func(x, n, coeffs)
+    <span style="color:#FF0000">! polynomial function of order n-1 and woth coefficients coeffs</span>
+
+    <b style="color:#0000FF">IMPLICIT</b> <b style="color:#0000FF">NONE</b>
+
+    <b style="color:#0000FF">REAL</b>(8) :: poly_func
+    <b style="color:#0000FF">INTEGER</b> :: n
+    <b style="color:#0000FF">REAL</b>(8) :: x
+    <b style="color:#0000FF">REAL</b>(8) :: coeffs(n)
+    <b style="color:#0000FF">REAL</b>(8) :: num, dem
+    <b style="color:#0000FF">INTEGER</b> :: i
+
+    num = 0.0d0
+    dem = 0.0d0
+
+    <b style="color:#0000FF">DO</b> i = 1,n
+       num = num + coeffs(i)*x**(i-1)
+       dem = dem + coeffs(i)/dble(i)
+    <b style="color:#0000FF">END</b> <b style="color:#0000FF">DO</b>
+
+    poly_func = num/dem
+    <b style="color:#0000FF">RETURN</b>
+
+  <b style="color:#0000FF">END</b> <b style="color:#0000FF">FUNCTION</b> poly_func
+
+<b style="color:#0000FF">END</b> <b style="color:#0000FF">MODULE</b> funcs
+</pre>
+</div>
+
+</br>
+<h4>Compiling the Fortran subroutine</h4>
+
+	    <p>First, we need to compile any additional files, in our case functions.f90<br></p>
+	    <div style="background: #ffffff;">
+	      <pre style="margin: 0; line-height: 125%">gfortran -c functions.f90</pre>
+	    </div>
+	    <p><br>Then we can compile poly_dist.f90 using f2py<br></p>
+	    <div style="background: #ffffff;">
+	      <pre style="margin: 0; line-height: 125%">python3.5 -m numpy.f2py -c -m poly_dist functions.f90 poly_dist.f90</pre>
+	    </div>
+	    <p><br>Here we have specified python3.5, although any
+	    version can be used. The first -m flag tells python to run
+	    the module numpy.f2py as a script. The second -m flag
+	    tells f2py what the name of the module will be, in our
+	    case poly_dist. The -c flag tells f2py that we are
+	    compiling an object file, rather than an
+	    executable.<br><br></p>
+
+	    <h4>Using the module in Python</h4>
+	    
+	    <p>Now we can import the module, along with any others we will need.</p>
+	    
+	    <div style="background: #ffffff;">
+	      <pre style="margin: 0; line-height: 125%">
+		<span style="color: #888888">#import the numpy and matplotlib.pyplot</span>
+		<span style="color: #008800; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">numpy</span> <span style="color: #008800; font-weight: bold">as</span> <span style="color: #0e84b5; font-weight: bold">np</span>
+		<span style="color: #008800; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">matplotlib.pyplot</span> <span style="color: #008800; font-weight: bold">as</span> <span style="color: #0e84b5; font-weight: bold">plt</span>
+		<span style="color: #888888">#import our module</span>
+		<span style="color: #008800; font-weight: bold">import</span> <span style="color: #0e84b5; font-weight: bold">poly_dist</span> </pre>
+	    </div>
+
+	    </br>
+	    <p>Before using our Fortran subroutine, we will first
+	    write a Python function to calculate the same polynomial
+	    that we will sample from.</p>
+	    
+	    <div style="background: #ffffff;">
+	      <pre style="margin: 0; line-height: 125%">
+		<span style="color: #888888">#define a function to calculate the polynomial for a given set of coefficients</span>
+		<span style="color: #008800; font-weight: bold">def</span> <span style="color: #0066BB; font-weight: bold">func</span>(x, coeffs):
+		    num <span style="color: #333333">=</span> <span style="color: #6600EE; font-weight: bold">0.0</span>
+		    dem <span style="color: #333333">=</span> <span style="color: #6600EE; font-weight: bold">0.0</span>
+		    <span style="color: #008800; font-weight: bold">for</span> i <span style="color: #000000; font-weight: bold">in</span> <span style="color: #007020">range</span>(<span style="color: #007020">len</span>(coeffs)):
+		        num <span style="color: #333333">+=</span> coeffs[i]<span style="color: #333333">*</span>x<span style="color: #333333">**</span>i
+		        dem <span style="color: #333333">+=</span> coeffs[i]<span style="color: #333333">/</span>(i<span style="color: #333333">+</span><span style="color: #0000DD; font-weight: bold">1</span>)
+		    <span style="color: #008800; font-weight: bold">return</span> num<span style="color: #333333">/</span>dem </pre>
+	    </div>
+
+</br>
+	    <p>And now we can generate our samples. As a test we will
+	    go for an 11th order and a 2nd order polynomial.</p>
+	    
+	    <div style="background: #ffffff;">
+	      <pre style="margin: 0; line-height: 125%">
+		<span style="color: #888888">#set the coefficients for an 11th order polynomial</span>
+		coeffs1 <span style="color: #333333">=</span> [<span style="color: #6600EE; font-weight: bold">1.0</span>,<span style="color: #333333">-</span><span style="color: #6600EE; font-weight: bold">2.0</span>,<span style="color: #6600EE; font-weight: bold">2.0</span>,<span style="color: #6600EE; font-weight: bold">1.0</span><span style="color: #333333">-</span><span style="color: #6600EE; font-weight: bold">1.0</span>,<span style="color: #333333">-</span><span style="color: #6600EE; font-weight: bold">1.0</span>,<span style="color: #333333">-</span><span style="color: #6600EE; font-weight: bold">1.0</span>,<span style="color: #6600EE; font-weight: bold">0.7</span>,<span style="color: #6600EE; font-weight: bold">1.4</span>,<span style="color: #333333">-</span><span style="color: #6600EE; font-weight: bold">1.0</span>,<span style="color: #6600EE; font-weight: bold">0.5</span>,<span style="color: #6600EE; font-weight: bold">0.5</span>]
+		y1 <span style="color: #333333">=</span> poly_dist<span style="color: #333333">.</span>sample(coeffs1, <span style="color: #0000DD; font-weight: bold">100000</span>)
+
+		<span style="color: #888888">#set the coefficients for a 2nd order polynomial</span>
+		coeffs2 <span style="color: #333333">=</span> [<span style="color: #6600EE; font-weight: bold">1.0</span>,<span style="color: #6600EE; font-weight: bold">0.0</span>,<span style="color: #6600EE; font-weight: bold">1.0</span>]
+		y2 <span style="color: #333333">=</span> poly_dist<span style="color: #333333">.</span>sample(coeffs2, <span style="color: #0000DD; font-weight: bold">100000</span>) </pre>
+	    </div>
+
+
+</br>
+	    <p>And finally we can plot the outcome, first for the 11th
+	    order, and then the 2nd order polynomials.</p>
+
+	    <div style="background: #ffffff;">
+	      <pre style="margin: 0; line-height: 125%">
+		<span style="color: #888888">#plot a histogram of the output for the 11th order polynomial</span>
+		plt<span style="color: #333333">.</span>hist(y1,bins <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">40</span>, normed<span style="color: #333333">=</span><span style="color: #008800; font-weight: bold">True</span>, color<span style="color: #333333">=</span><span style="background-color: #fff0f0">&quot;red&quot;</span>)
+
+		<span style="color: #888888">#calculate and plot the actual function</span>
+		x_in <span style="color: #333333">=</span> np<span style="color: #333333">.</span>linspace(<span style="color: #6600EE; font-weight: bold">0.0</span>,<span style="color: #6600EE; font-weight: bold">1.0</span>,<span style="color: #0000DD; font-weight: bold">100</span>)
+		y_in1 <span style="color: #333333">=</span> func(x_in, coeffs1)
+		plt<span style="color: #333333">.</span>plot(x_in,y_in1, linewidth<span style="color: #333333">=</span><span style="color: #0000DD; font-weight: bold">3</span>, c<span style="color: #333333">=</span><span style="background-color: #fff0f0">&quot;black&quot;</span>)
+
+		<span style="color: #888888">#set the title and axis labels</span>
+		plt<span style="color: #333333">.</span>title(<span style="background-color: #fff0f0">&quot;polynomial distribution function&quot;</span>)
+		plt<span style="color: #333333">.</span>xlabel(<span style="background-color: #fff0f0">&quot;x&quot;</span>)
+		plt<span style="color: #333333">.</span>ylabel(<span style="background-color: #fff0f0">&quot;f(x)&quot;</span>)
+
+		<span style="color: #888888">#show the plot</span>
+		plt<span style="color: #333333">.</span>show()</pre>
+	    </div>
+	    <div style="text-align: center"><img width="50%" height="50%" src="pics/f2py-image1.png" /></div>
+
+	    
+	    
+	    <div style="background: #ffffff;">
+	      <pre style="margin: 0; line-height: 125%">
+		<span style="color: #888888">#plot a histogram of the output for the 11th order polynomial</span>
+		plt<span style="color: #333333">.</span>hist(y2,bins <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">40</span>, normed<span style="color: #333333">=</span><span style="color: #008800; font-weight: bold">True</span>, color<span style="color: #333333">=</span><span style="background-color: #fff0f0">&quot;red&quot;</span>)
+
+		<span style="color: #888888">#calculate and plot the actual function</span>
+		x_in <span style="color: #333333">=</span> np<span style="color: #333333">.</span>linspace(<span style="color: #6600EE; font-weight: bold">0.0</span>,<span style="color: #6600EE; font-weight: bold">1.0</span>,<span style="color: #0000DD; font-weight: bold">100</span>)
+		y_in2 <span style="color: #333333">=</span> func(x_in, coeffs2)
+		plt<span style="color: #333333">.</span>plot(x_in,y_in2, linewidth<span style="color: #333333">=</span><span style="color: #0000DD; font-weight: bold">3</span>, c<span style="color: #333333">=</span><span style="background-color: #fff0f0">&quot;black&quot;</span>)
+
+		<span style="color: #888888">#set the title and axis labels</span>
+		plt<span style="color: #333333">.</span>title(<span style="background-color: #fff0f0">&quot;polynomial distribution function&quot;</span>)
+		plt<span style="color: #333333">.</span>xlabel(<span style="background-color: #fff0f0">&quot;x&quot;</span>)
+		plt<span style="color: #333333">.</span>ylabel(<span style="background-color: #fff0f0">&quot;f(x)&quot;</span>)
+
+		<span style="color: #888888">#show the plot</span>
+		plt<span style="color: #333333">.</span>show()</pre>
+	    </div>
+	    <div style="text-align: center"><img width="50%" height="50%" src="pics/f2py-image2.png" /></div>
+	    
+	    
+	  </div>
+	</div>
+
+	<p class="bottom-three"></p>
+ 	
+      </div>     
+    </div>
+
+
+    
+    <hr>
+    <div class="container">      
+      <footer>
+	<p>&copy; 2017 Matthew Dennison.</p>
+      </footer>
+    </div> 
+    
+    <!-- Bootstrap core JavaScript
+	 ================================================== -->
+    <!-- <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="jquery.min.js"><\/script>')</script>
+
+      <script src="bootstrap.min.js"></script>
+      <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+      <script src="ie10-viewport-bug-workaround.js"></script>
+
+      <script>
+	function myFunction1() {
+	var popup = document.getElementById("myPopup1");
+	popup.classList.toggle("show");
+	}
+      </script>
+      <script>
+	function myFunction2() {
+	var popup = document.getElementById("myPopup2");
+	popup.classList.toggle("show");
+	}
+      </script>
+      <script>
+	function myFunction3() {
+	var popup = document.getElementById("myPopup3");
+	popup.classList.toggle("show");
+	}
+      </script>
+      <script>
+	function myFunction4() {
+	var popup = document.getElementById("myPopup4");
+	popup.classList.toggle("show");
+	}
+      </script>
+      <script>
+	function myFunction5() {
+	var popup = document.getElementById("myPopup5");
+	popup.classList.toggle("show");
+	}
+      </script>
+      <script>
+	var modal = document.getElementById('myModal');
+
+	var img = document.getElementById('myImg');
+	var modalImg = document.getElementById("img01");
+	var captionText = document.getElementById("caption");
+	img.onclick = function(){
+	modal.style.display = "block";
+	modalImg.src = this.src;
+	captionText.innerHTML = this.alt;
+	}
+
+	var span = document.getElementsByClassName("close")[0];
+
+	span.onclick = function() { 
+	modal.style.display = "none";
+	}
+      </script>
+
+
+  </body>
+</html>

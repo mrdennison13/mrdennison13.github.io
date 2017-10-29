@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
+
+    <title>Jumbotron Template for Bootstrap</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link href="mine.css" rel="stylesheet">
+    <link href="hover.css" rel="stylesheet">
+    
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="jumbotron.css" rel="stylesheet">
+
+    <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
+    <script type="text/javascript" async
+	    src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-MML-AM_CHTML">
+    </script>
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="ie-emulation-modes-warning.js"></script>
+
+    
+  </head>
+
+  <body>
+    
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">Home</a>
+        </div>
+	<div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+	    <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Research <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="research_en.html">Elastic networks</a></li>
+		<li><a href="research_a.html">Active force-dipoles</a></li>
+                <li><a href="research_c.html">Colloidal particles</a></li>
+                <!-- <li class="divider"></li> -->
+              </ul>
+            </li>
+	    <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Resources <b class="caret"></b></a>
+              <ul class="dropdown-menu">
+		<li><a href="MC.html">Monte Carlo</a></li>
+		<li><a href="buffon.html">Buffon's needle</a></li>
+		<li><a href="notes.html">Notes</a></li>
+              </ul>
+            </li>
+	    <!-- <li><a href="research.html">Research</a></li>-->
+	    <li><a href="pub_list.html" >Publications</a></li>
+	    <li><a href="cv.html">CV</a></li>
+	    <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+	<div class="row-fluid">
+	  <div class="span10">
+            <h1>Matthew Dennison</h1>
+	  </div>
+	</div>
+      </div>
+    </div>
+
+
+
+
+    <div class="container-fluid">
+      <div class="col-md-12">
+<!--	<center>
+	  <h1>Random notes</h1>
+	  <div class="col-sm-offset-2 col-md-8">
+	    <p>Some random bits and pieces to do with coding, algorithms, and whatever else takes my fancy... <br><br><br></p>
+	  </div>
+	</center>-->
+	
+	<div class="row">
+	  <div class="col-sm-offset-1 col-md-2">
+	    <h3>Contents</h3>
+	    <!-- <ul>-->
+	    <li><a href="note_f2py.html">f2py: calling Fortran subroutines from Python</a></li>
+	    <li><a href="note_aliasing.html">Aliasing functions in Fortran</a></li>
+	    <li><a href="note_vectorizing.html">Vectorizing processes in Python</a></li>
+	   <!--  </ul>-->
+	  <!--  <p> </p>-->
+	  </div>
+	  <div class="col-md-8">
+
+	    <h3>Pointing to functions in Fortran</h3>
+
+	    <p>One useful feature of Fortran that I recently
+	    discovered are procedure pointers, which allow us to
+	    effectively alias a function (or subroutine) name. I
+	    wanted to write a program which could calculate virial
+	    coefficients for a range of particle shapes (e.g. spheres,
+	    spheroids, spherocylinders etc.). The basic code is the
+	    same in all cases, except for the subroutine which checks
+	    for overlaps between the particles. Usually, I would just
+	    switch the subroutines as needed and recompile, but
+	    wouldn't it be great to just specify the shape in an input
+	    file? Since the overlap routine is called a lot, using an
+	    IF statement each time we call it is a
+	    non-starter. Instead, we can use a procedure pointer at
+	    the start of the program to select the function we
+	    want.<br><br></p>
+	    
+	    <h4>Setting up the interface</h4>
+
+	    <p>The first thing we have to do is set up an interface
+	    block for our procedure. This tells the main program how
+	    to use the procedure and defines the what arguments the it
+	    will take. Both this, and the multiple overlap-test
+	    subroutines, are in the same module called
+	    "overlaps".<br></p>
+<div style="background: #FFFFFF;">
+<pre>
+<b style="color:#0000FF">MODULE</b> overlaps
+
+  <b style="color:#0000FF">INTERFACE</b>
+
+     <b style="color:#0000FF">SUBROUTINE</b> sub_interface(r, u1, u2, over)
+       <b style="color:#0000FF">REAL</b>(8) :: r(3), u1(3), u2(3)
+       <b style="color:#0000FF">LOGICAL</b> :: over
+     <b style="color:#0000FF">END</b> <b style="color:#0000FF">SUBROUTINE</b> sub_interface
+
+  <b style="color:#0000FF">END</b> <b style="color:#0000FF">INTERFACE</b>
+
+  <b style="color:#0000FF">PROCEDURE</b>(sub_interface),pointer :: overlap
+
+</pre>
+</div>
+</br>
+	    <p>Each overlap test will take three real arrays as
+	    inputs. r is the separation between two particles, and u1
+	    and u2 are the unit vectors giving the particle
+	    orientations. The parameter over, which has type logical,
+	    is returned, and is set to be TRUE when the particles
+	    overlap and FALSE when they do not. At the end, we declare
+	    a pointer with name "overlap", which will point to one of
+	    the overlap tests we will define next.<br><br></p>
+	    
+	    <h4>Overlap tests</h4>
+	    
+	    <p>Now we have to define the procedures. The exact code is
+	    excluded here for brevity, but note how the subroutines
+	    take the same variables as the interface above. Also note
+	    that it does not matter what we call these in the
+	    functions, just that their types (and shapes, if they are
+	    arrays) matches those in the interface. <br></p>
+
+<div style="background: #FFFFFF;">
+<pre>
+<b style="color:#0000FF">CONTAINS</b>
+
+
+  <b style="color:#0000FF">SUBROUTINE</b> overlap_spherocylinder(r12, u1, u2, over)
+    <b style="color:#0000FF">REAL</b>(8) :: r12(3), u1(3), u2(3)
+    <b style="color:#0000FF">LOGICAL</b> :: over
+    <span style="color:#FF0000">! overlap test for spherocylinders</span>
+  <b style="color:#0000FF">END</b> <b style="color:#0000FF">SUBROUTINE</b> overlap_spherocylinder
+
+
+  <b style="color:#0000FF">SUBROUTINE</b> overlap_cut_sphere(rij, ui, uj, over)
+    <b style="color:#0000FF">REAL</b>(8) :: rij(3), ui(3), uj(3)
+    <b style="color:#0000FF">LOGICAL</b> :: over
+    <span style="color:#FF0000">! overlap test for cut-spheres</span>
+  <b style="color:#0000FF">END</b> <b style="color:#0000FF">SUBROUTINE</b> overlap_cut_sphere
+
+
+  <b style="color:#0000FF">SUBROUTINE</b> overlap_sphere(r12, u1, u2, over)
+    <b style="color:#0000FF">REAL</b>(8) :: r12(3), u1(3), u2(3)
+    <b style="color:#0000FF">LOGICAL</b> :: over
+    <span style="color:#FF0000">! overlap test for spheres</span>
+  <b style="color:#0000FF">END</b> <b style="color:#0000FF">SUBROUTINE</b> overlap_sphere
+
+
+  <b style="color:#0000FF">SUBROUTINE</b> overlap_oblate_spherocylinder(r12, u1, u2, over)
+    <b style="color:#0000FF">REAL</b>(8) :: r12(3), u1(3), u2(3)
+    <b style="color:#0000FF">LOGICAL</b> :: over
+    <span style="color:#FF0000">! overlap test for oblate spherocylinders</span>
+  <b style="color:#0000FF">END</b> <b style="color:#0000FF">SUBROUTINE</b> overlap_oblate_spherocylinder
+
+
+  <b style="color:#0000FF">SUBROUTINE</b> overlap_spheroid(rab, ua, ub, over)
+    <b style="color:#0000FF">REAL</b>(8) :: rab(3), ua(3), ub(3)
+    <b style="color:#0000FF">LOGICAL</b> :: over
+    <span style="color:#FF0000">! overlap test for spheroids</span>
+  <b style="color:#0000FF">END</b> <b style="color:#0000FF">SUBROUTINE</b> overlap_spheroid
+
+<b style="color:#0000FF">END</b> <b style="color:#0000FF">MODULE</b> overlaps
+</pre>
+</div>
+</br>
+<h4>Choosing the procedure</h4>
+
+	    <p>Finally, we have to select which of the procedures we
+	    want to use, and point to it. In the main programme we
+	    define a character variable shape, which will have the
+	    name of the shape we want to work with. An IF statement is
+	    then used to choose which overlap test we will point
+	    at.<br></p>
+
+<div style="background: #FFFFFF;">
+<pre>
+<b style="color:#0000FF">PROGRAM</b> calc_virial
+
+  <b style="color:#0000FF">USE</b> overlaps
+
+  <b style="color:#0000FF">IMPLICIT</b> <b style="color:#0000FF">NONE</b>
+
+  <b style="color:#0000FF">CHARACTER</b>(40) :: <b style="color:#0000FF">SHAPE</b>
+
+  <b style="color:#0000FF">SHAPE</b> = <b style="color:#0000FF">TRIM</b>(shape)
+
+  <b style="color:#0000FF">IF</b> (shape <b style="color:#0000FF">.EQ.</b> 'sphere') <b style="color:#0000FF">THEN</b>
+     overlap => overlap_sphere
+  <b style="color:#0000FF">ELSEIF</b> (shape <b style="color:#0000FF">.EQ.</b> 'spherocyl') <b style="color:#0000FF">THEN</b>
+     overlap => overlap_spherocylinder
+  <b style="color:#0000FF">ELSEIF</b> (shape <b style="color:#0000FF">.EQ.</b> 'oblate_spherocyl') <b style="color:#0000FF">THEN</b>
+     overlap => overlap_oblate_spherocylinder
+  <b style="color:#0000FF">ELSEIF</b> (shape <b style="color:#0000FF">.EQ.</b> 'cut_sphere') <b style="color:#0000FF">THEN</b>
+     overlap => overlap_cut_sphere
+  <b style="color:#0000FF">ELSEIF</b> (shape <b style="color:#0000FF">.EQ.</b> 'spheroid') <b style="color:#0000FF">THEN</b>
+     overlap => overlap_spheroid
+  <b style="color:#0000FF">ENDIF</b>
+
+<b style="color:#0000FF">END</b> <b style="color:#0000FF">PROGRAM</b> calc_virial
+</pre>
+</div>
+	    
+	  </div>
+	</div>
+	
+<p class="bottom-three"></p>
+
+      </div>     
+    </div>
+    
+
+    
+    <hr>
+    <div class="container">      
+      <footer>
+	<p>&copy; 2017 Matthew Dennison.</p>
+      </footer>
+    </div> 
+    
+    <!-- Bootstrap core JavaScript
+	 ================================================== -->
+    <!-- <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="jquery.min.js"><\/script>')</script>
+
+      <script src="bootstrap.min.js"></script>
+      <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+      <script src="ie10-viewport-bug-workaround.js"></script>
+
+      <script>
+	function myFunction1() {
+	var popup = document.getElementById("myPopup1");
+	popup.classList.toggle("show");
+	}
+      </script>
+      <script>
+	function myFunction2() {
+	var popup = document.getElementById("myPopup2");
+	popup.classList.toggle("show");
+	}
+      </script>
+      <script>
+	function myFunction3() {
+	var popup = document.getElementById("myPopup3");
+	popup.classList.toggle("show");
+	}
+      </script>
+      <script>
+	function myFunction4() {
+	var popup = document.getElementById("myPopup4");
+	popup.classList.toggle("show");
+	}
+      </script>
+      <script>
+	function myFunction5() {
+	var popup = document.getElementById("myPopup5");
+	popup.classList.toggle("show");
+	}
+      </script>
+      <script>
+	var modal = document.getElementById('myModal');
+
+	var img = document.getElementById('myImg');
+	var modalImg = document.getElementById("img01");
+	var captionText = document.getElementById("caption");
+	img.onclick = function(){
+	modal.style.display = "block";
+	modalImg.src = this.src;
+	captionText.innerHTML = this.alt;
+	}
+
+	var span = document.getElementsByClassName("close")[0];
+
+	span.onclick = function() { 
+	modal.style.display = "none";
+	}
+      </script>
+
+
+  </body>
+</html>
