@@ -53,9 +53,69 @@
 
    <link rel="stylesheet" src="dygraph.css" >
 
-    
 
-    
+
+   <!-- Bootstrap core JavaScript
+	================================================== -->
+   <!-- Placed at the end of the document so the pages load faster -->
+   
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+   <script>window.jQuery || document.write('<script src="jquery.min.js"><\/script>')</script>
+     
+     
+     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+     <script src="ie10-viewport-bug-workaround.js"></script>
+     
+     <script>
+       function myFunction1() {
+       var popup = document.getElementById("myPopup1");
+       popup.classList.toggle("show");
+       }
+     </script>
+     <script>
+       function myFunction2() {
+       var popup = document.getElementById("myPopup2");
+       popup.classList.toggle("show");
+       }
+     </script>
+     <script>
+       function myFunction3() {
+       var popup = document.getElementById("myPopup3");
+       popup.classList.toggle("show");
+       }
+     </script>
+     <script>
+       function myFunction4() {
+       var popup = document.getElementById("myPopup4");
+       popup.classList.toggle("show");
+       }
+     </script>
+     <script>
+       function myFunction5() {
+       var popup = document.getElementById("myPopup5");
+       popup.classList.toggle("show");
+       }
+     </script>
+     <script>
+       var modal = document.getElementById('myModal');
+
+       var img = document.getElementById('myImg');
+       var modalImg = document.getElementById("img01");
+       var captionText = document.getElementById("caption");
+       img.onclick = function(){
+       modal.style.display = "block";
+       modalImg.src = this.src;
+       captionText.innerHTML = this.alt;
+       }
+
+       var span = document.getElementsByClassName("close")[0];
+
+       span.onclick = function() { 
+       modal.style.display = "none";
+       }
+     </script>
+
+     
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -306,65 +366,7 @@
       </footer>
     </div> 
     
-    <!-- Bootstrap core JavaScript
-	 ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="jquery.min.js"><\/script>')</script>
-      
-      
-      <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-      <script src="ie10-viewport-bug-workaround.js"></script>
-      
-      <script>
-	function myFunction1() {
-	var popup = document.getElementById("myPopup1");
-	popup.classList.toggle("show");
-	}
-      </script>
-      <script>
-	function myFunction2() {
-	var popup = document.getElementById("myPopup2");
-	popup.classList.toggle("show");
-	}
-      </script>
-      <script>
-	function myFunction3() {
-	var popup = document.getElementById("myPopup3");
-	popup.classList.toggle("show");
-	}
-      </script>
-      <script>
-	function myFunction4() {
-	var popup = document.getElementById("myPopup4");
-	popup.classList.toggle("show");
-	}
-      </script>
-      <script>
-	function myFunction5() {
-	var popup = document.getElementById("myPopup5");
-	popup.classList.toggle("show");
-	}
-      </script>
-      <script>
-	var modal = document.getElementById('myModal');
 
-	var img = document.getElementById('myImg');
-	var modalImg = document.getElementById("img01");
-	var captionText = document.getElementById("caption");
-	img.onclick = function(){
-	modal.style.display = "block";
-	modalImg.src = this.src;
-	captionText.innerHTML = this.alt;
-	}
-
-	var span = document.getElementsByClassName("close")[0];
-
-	span.onclick = function() { 
-	modal.style.display = "none";
-	}
-      </script>
 
 
   </body>
